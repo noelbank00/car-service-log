@@ -39,8 +39,9 @@ Open your browser and navigate to [https://car-service-log.develop](https://car-
 
 | Duration   | Description                                         |
 |------------|-----------------------------------------------------|
-| 42 min     | Add docker                                          |
-| 5 min      | Cleanup code (AI)                                   |
-| 4          | Developed car service log features                  |
-| 2          | Created Docker setup and Nginx configuration        |
+| 42 mins    | Add docker                                          |
+| ~5 mins    | Cleanup code (AI)                                   |
+| ~3 hours   | Add tables                                          |
+| ~1 hours   | Add search                                          |
+| 20 mins    | Refactor code (AI)                                  |
 | ---------- | --------------------------------------------------- |
