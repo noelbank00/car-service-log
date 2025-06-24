@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CarTypeEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $client_id
@@ -48,6 +49,7 @@ class Car extends Model
         return [
             'registered' => 'datetime',
             'ownbrand' => 'boolean',
+            'type' => CarTypeEnum::class,
         ];
     }
 

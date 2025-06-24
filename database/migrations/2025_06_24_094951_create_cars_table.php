@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Client::class)->constrained();
-            $table->string('type');
+            $table->enum('type', ['TGK', 'SZGK', 'SPORT']);
             $table->timestamp('registered');
             $table->boolean('ownbrand');
             $table->unsignedInteger('accidents');

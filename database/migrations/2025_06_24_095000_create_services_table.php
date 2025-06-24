@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignIdFor(\App\Models\Car::class)->constrained();
             $table->string('log_number');
             $table->string('event');
-            $table->timestamp('event_time');
+            $table->timestamp('event_time')->nullable();
             $table->integer('document_id');
             $table->timestamps();
         });

@@ -50,7 +50,7 @@ class Service extends Model
     public function casts(): array
     {
         return [
-            'event_time' => 'carbon',
+            'event_time' => 'datetime',
         ];
     }
 
