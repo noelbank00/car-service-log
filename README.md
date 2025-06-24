@@ -44,4 +44,3 @@ Open your browser and navigate to [https://car-service-log.develop](https://car-
 | ~3 hours   | Add tables                                          |
 | ~1 hours   | Add search                                          |
 | 20 mins    | Refactor code (AI)                                  |
-| ---------- | --------------------------------------------------- |
