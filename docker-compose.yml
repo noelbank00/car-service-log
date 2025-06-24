@@ -1,0 +1,80 @@
+services:
+    app:
+        build:
+            context: ./docker/php
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        volumes:
+            - .:/var/www
+        networks:
+            - car-service-log
+
+    nginx:
+        image: nginx:stable
+        volumes:
+            - ./public:/var/www/public
+            - ./docker/nginx/ssl/car-service-log.develop.crt:/etc/ssl/certs/car-service-log.develop.crt
+            - ./docker/nginx/ssl/car-service-log.develop.key:/etc/ssl/private/car-service-log.develop.key
+            - ./docker/nginx/car-service-log.develop.conf:/etc/nginx/conf.d/car-service-log.develop.conf
+            - ./docker/nginx/locations.conf:/etc/nginx/locations.conf
+        ports:
+            - ${APP_PORT:-443}:443
+        depends_on:
+            - app
+        networks:
+            - car-service-log
+
+    mysql:
+        build:
+            context: ./docker/mysql
+        ports:
+            - ${FORWARD_MYSQL_PORT:-3306}:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: 123456
+            MYSQL_DATABASE: car-service-log
+            MYSQL_USER: car-service-log
+            MYSQL_PASSWORD: 123456
+        volumes:
+            - car-service-log-mysql:/var/lib/mysql
+            - ./docker/mysql/config.cnf:/etc/mysql/conf.d/config.cnf
+        networks:
+            car-service-log:
+                aliases:
+                    - car-service-log-mysql
+
+    node:
+        build:
+            context: ./docker/node
+        ports:
+            - ${FORWARD_NODE_PORT:-5173}:5173
+        volumes:
+            - .:/var/www
+            - ./docker/nginx/ssl:/var/ssl
+        networks:
+            car-service-log:
+                aliases:
+                    - "car-service-log.develop"
+        depends_on:
+            - app
+
+    redis:
+        image: redis:alpine
+        volumes:
+            - car-service-log-redis:/data
+        healthcheck:
+            test: [ "CMD", "redis-cli", "ping" ]
+            retries: 3
+            timeout: 5s
+        networks:
+            car-service-log:
+                aliases:
+                    - car-service-log-redis
+
+volumes:
+    car-service-log-mysql:
+        driver: local
+    car-service-log-redis:
+        driver: local
+networks:
+    car-service-log:
+        driver: bridge
