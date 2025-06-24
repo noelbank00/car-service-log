@@ -7,7 +7,7 @@ openssl req -x509 -out car-service-log.develop.crt -keyout car-service-log.devel
 	    -days 365
 ```
 
-## Add the certificate to your system's trusted certificates
+## Add the certificate to your system's trusted certificates (Only for macOS)
 
 ```bash
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain car-service-log.develop.crt
@@ -28,7 +28,7 @@ docker compose up -d
 ## Run the database migrations
 
 ```bash
-docker compose exec php php artisan migrate
+docker compose exec app php artisan migrate
 ```
 
 ## Access the application
