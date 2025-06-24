@@ -25,6 +25,22 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 docker compose up -d
 ```
 
+## Run the database migrations
+
+```bash
+docker compose exec php php artisan migrate
+```
+
 ## Access the application
 
 Open your browser and navigate to [https://car-service-log.develop](https://car-service-log.develop).
+
+## Worktime
+
+| Duration   | Description                                         |
+|------------|-----------------------------------------------------|
+| 42 min     | Add docker                                          |
+| 5 min      | Cleanup code (AI)                                   |
+| 4          | Developed car service log features                  |
+| 2          | Created Docker setup and Nginx configuration        |
+| ---------- | --------------------------------------------------- |
