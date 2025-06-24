@@ -13,6 +13,7 @@ type Props = AppPageProps<{
 const page = usePage<Props>();
 const clients = computed(() => page.props.clients.data);
 const expandedClients = ref<Set<number>>(new Set());
+const expandedCars = ref<Set<number>>(new Set());
 
 const toggleClient = (clientId: number) => {
     if (expandedClients.value.has(clientId)) {
@@ -22,8 +23,20 @@ const toggleClient = (clientId: number) => {
     }
 };
 
+const toggleCar = (carId: number) => {
+    if (expandedCars.value.has(carId)) {
+        expandedCars.value.delete(carId);
+    } else {
+        expandedCars.value.add(carId);
+    }
+};
+
 const isExpanded = (clientId: number) => {
     return expandedClients.value.has(clientId);
+};
+
+const isCarExpanded = (carId: number) => {
+    return expandedCars.value.has(carId);
 };
 </script>
 
@@ -66,14 +79,32 @@ const isExpanded = (clientId: number) => {
                                 <div class="px-4 py-2">Utolsó szervíz neve</div>
                                 <div class="px-4 py-2">Utolsó szervíz időpontja</div>
                             </div>
-                            <div class="col-span-3 grid grid-cols-7 bg-white dark:bg-gray-700" v-for="car in client.cars" :key="'car_' + car.id">
-                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.id}}</div>
-                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.type}}</div>
-                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.registered}}</div>
-                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.ownbrand ? 'Igen' : 'Nem'}}</div>
-                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.accidents}}</div>
-                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.last_service_name ?? '-'}}</div>
-                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.last_service_date ?? '-'}}</div>
+                            <div v-for="car in client.cars" :key="'car_' + car.id" class="col-span-3">
+                                <div class="grid grid-cols-7 bg-white dark:bg-gray-700">
+                                    <div :class="'px-4 py-3 text-sm text-gray-900 dark:text-white' + (car.services && car.services.length > 0 ? ' cursor-pointer hover:underline' : ' cursor-not-allowed')"
+                                         @click="toggleCar(car.id)">{{car.id}}</div>
+                                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.type}}</div>
+                                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.registered}}</div>
+                                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.ownbrand ? 'Igen' : 'Nem'}}</div>
+                                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.accidents}}</div>
+                                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.last_service_name ?? '-'}}</div>
+                                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{car.last_service_date ?? '-'}}</div>
+                                </div>
+                                
+                                <div v-if="isCarExpanded(car.id) && car.services && car.services.length > 0" class="bg-gray-50 dark:bg-gray-800 p-4 ml-8">
+                                    <div class="grid grid-cols-4 bg-gray-200 text-xs text-gray-600 uppercase dark:bg-gray-700 dark:text-gray-300">
+                                        <div class="px-4 py-2">Naplószám</div>
+                                        <div class="px-4 py-2">Esemény</div>
+                                        <div class="px-4 py-2">Esemény időpontja</div>
+                                        <div class="px-4 py-2">Dokumentum azonosító</div>
+                                    </div>
+                                    <div v-for="service in car.services" :key="'service_' + service.id" class="grid grid-cols-4 bg-white dark:bg-gray-600 border-b dark:border-gray-700">
+                                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{service.log_number}}</div>
+                                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{service.event}}</div>
+                                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{service.event_time}}</div>
+                                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{service.document_id}}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

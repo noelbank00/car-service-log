@@ -22,6 +22,8 @@ class CarResource extends JsonResource
         /** @var Service|null $latestService */
         $latestService = $this->latestService;
 
+        ServiceResource::carData($this);
+
         return [
             'id' => $this->id,
             'type' => $this->type,
@@ -30,6 +32,7 @@ class CarResource extends JsonResource
             'accidents' => $this->accidents,
             'last_service_name' => $latestService?->event,
             'last_service_date' => $latestService?->event_time?->format('Y-m-d H:i:s'),
+            'services' => ServiceResource::collection($this->services),
         ];
     }
 }

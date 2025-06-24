@@ -7,6 +7,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
@@ -65,5 +66,10 @@ class Car extends Model
         return $this->hasOne(Service::class)
             ->orderByDesc('log_number')
             ->latestOfMany();
+    }
+
+    public function services(): HasMany
+    {
+        return $this->hasMany(Service::class)->orderByDesc('id');
     }
 }

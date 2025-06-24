@@ -15,7 +15,7 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request): Response
     {
-        $clients = Client::query()->with(['cars', 'cars.latestService'])->get();
+        $clients = Client::query()->with(['cars', 'cars.latestService', 'cars.services'])->get();
 
         return Inertia::render('Index', [
             'clients' => ClientResource::collection($clients),
