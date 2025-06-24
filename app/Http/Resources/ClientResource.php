@@ -22,6 +22,7 @@ class ClientResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'card_number' => $this->card_number,
+            'cars' => CarResource::collection($this->cars),
         ];
     }
 }

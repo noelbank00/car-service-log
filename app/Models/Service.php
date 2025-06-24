@@ -16,12 +16,12 @@ use Illuminate\Support\Carbon;
  * @property int $car_id
  * @property string $log_number
  * @property string $event
- * @property mixed $event_time
+ * @property Carbon|null $event_time
  * @property int $document_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Car $car
- * @property-read Client $client
+ * @property-read \App\Models\Car $car
+ * @property-read \App\Models\Client $client
  * @method static Builder<static>|Service newModelQuery()
  * @method static Builder<static>|Service newQuery()
  * @method static Builder<static>|Service query()

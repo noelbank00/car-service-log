@@ -7,6 +7,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -14,13 +15,14 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property int $client_id
- * @property string $type
+ * @property CarTypeEnum $type
  * @property Carbon $registered
  * @property bool $ownbrand
  * @property int $accidents
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Client $client
+ * @property-read Service|null $latestService
  * @method static Builder<static>|Car newModelQuery()
  * @method static Builder<static>|Car newQuery()
  * @method static Builder<static>|Car query()
@@ -56,5 +58,12 @@ class Car extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function latestService(): HasOne
+    {
+        return $this->hasOne(Service::class)
+            ->orderByDesc('log_number')
+            ->latestOfMany();
     }
 }
