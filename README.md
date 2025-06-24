@@ -37,10 +37,10 @@ Open your browser and navigate to [https://car-service-log.develop](https://car-
 
 ## Worktime
 
-| Duration   | Description                                         |
-|------------|-----------------------------------------------------|
-| 42 mins    | Add docker                                          |
-| ~5 mins    | Cleanup code (AI)                                   |
-| ~3 hours   | Add tables                                          |
-| ~1 hours   | Add search                                          |
-| 20 mins    | Refactor code (AI)                                  |
+| Duration | Description                                         |
+|----------|-----------------------------------------------------|
+| 42 mins  | Add docker                                          |
+| ~5 mins  | Cleanup code (AI)                                   |
+| ~3 hours | Add tables                                          |
+| ~1 hours | Add search                                          |
+| ~20 mins | Refactor code (AI)                                  |
